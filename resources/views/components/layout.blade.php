@@ -16,12 +16,25 @@
 
     <header>
         <nav>
-            <h1><a href="">Feladatok</a> </h1>
+            <h1><a href="{{route('tasks.index')}}">Feladatok</a> </h1>
 
             @guest
                 <a href="{{route('show.login')}}" class="btn">Bejelentkezés</a>
                 <a href="{{route('show.register')}}" class="btn">Regisztráció</a>
             @endguest
+
+            @auth
+                <span class="border-r-2 pr-2">
+                    Szia {{Auth::user()->name}}
+                </span>
+                <a href="{{route('tasks.create')}}">Új feladat létrehozása</a>
+                <form action="{{route('logout')}}" method="POST" class="m-0">
+                    @csrf
+                    <button class="btn">
+                        Kijelentkezés
+                    </button>
+                </form>
+            @endauth
         </nav>
     </header>
 

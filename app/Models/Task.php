@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\TaskStatus;
 use Illuminate\Database\Eloquent\Model;
 
 class Task extends Model
@@ -15,7 +16,13 @@ class Task extends Model
         'parent_id'
     ];
 
-    protected $casts = ['due_date' => 'datetime'];
+    
+    protected function casts() { 
+       return [
+        'due_date' => 'datetime',
+        'status' => TaskStatus::class
+        ];
+    }
 
     public function user() {
         return $this->belongsTo(User::class);
@@ -24,4 +31,6 @@ class Task extends Model
     public function subtasks(){
         return $this->hasMany(Task::class, 'parent_id');
     }
+
+ 
 }

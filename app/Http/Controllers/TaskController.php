@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Task;
+use App\Enums\TaskStatus;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class TaskController extends Controller
 {
@@ -12,7 +14,9 @@ class TaskController extends Controller
      */
     public function index()
     {
-        //
+        $tasks = Task::where('user_id', Auth::id())->whereNull('parent_id')->with('subtasks')->get();
+
+        return view('tasks.index', ["tasks" => $tasks]);
     }
 
     /**
@@ -20,7 +24,9 @@ class TaskController extends Controller
      */
     public function create()
     {
-        //
+        $tasks = Task::all();
+
+        return view('tasks.create', ['tasks' => $tasks]);
     }
 
     /**
@@ -28,7 +34,31 @@ class TaskController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validated = $request->validate([
+            'title' => 'required|string|max:255',
+            'description' => 'required|string|min:10|max:1000',
+            'status' => 'nullable|string',
+            'parent_id' => 'nullable|exists:tasks,id',
+            'due_date_day' => 'required|date',
+            'due_date_time' => 'required|date_format:H:i'
+        ]);
+
+
+        $fullDate = $validated['due_date_day'] . ' ' . $validated['due_date_time']. ':00';
+
+        $taskData = [
+            'title' => $validated['title'],
+            'description' => $validated['description'],
+            'status' => $validated['status'] ?? null,
+            'parent_id' => $validated['parent_id'] ?? null,
+            'user_id' => Auth::id(),
+            'due_date' => $fullDate
+        ];
+
+        Task::create($taskData);
+
+        return redirect()->route('tasks.index')->with('success', 'Feladat sikeresen hozzáadva');
+
     }
 
     /**
@@ -36,7 +66,9 @@ class TaskController extends Controller
      */
     public function show(Task $task)
     {
-        //
+       // $task->load('TaskStatus');
+
+        return view('tasks.show', ["task" => $task]);
     }
 
     /**
