@@ -16,14 +16,16 @@
 
     <header>
         <nav>
-            <h1><a href="{{route('tasks.index')}}">Feladatok</a> </h1>
+            
 
             @guest
+                <h1><a href="{{route('welcome')}}">Feladatok</a> </h1>
                 <a href="{{route('show.login')}}" class="btn">Bejelentkezés</a>
                 <a href="{{route('show.register')}}" class="btn">Regisztráció</a>
             @endguest
 
             @auth
+                <h1><a href="{{route('tasks.index')}}">Feladatok</a> </h1>
                 <span class="border-r-2 pr-2">
                     Szia {{Auth::user()->name}}
                 </span>
