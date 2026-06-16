@@ -178,7 +178,7 @@ class TaskController extends Controller
             return redirect()->route('tasks.show', $absoluteParentId)->with('success', 'A feladat sikeresen frissítve');
         }
 
-        return redirect()->route('tasks.index')->with('success', 'A feladat sikeresen frissítve');
+        return redirect()->route('tasks.show', $task->id)->with('success', 'A feladat sikeresen frissítve');
     }
 
     /**
