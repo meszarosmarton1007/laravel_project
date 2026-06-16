@@ -2,5 +2,5 @@
 
 <div @class(['highlight' => $highlight, 'card'])>
     {{$slot}}
-    <a {{$attributes}} class="btn">Részletek</a>
+    <a {{$attributes}} class="btn">Részletek és alfeladatok</a>
 </div>
