@@ -10,6 +10,17 @@ use Illuminate\Support\Facades\Auth;
 class TaskController extends Controller
 {
     /**
+     * Find the absulute parent
+     */
+    public function getAbsoluteParentId(Task $task){
+        while ($task->parent_id !== null){
+            $task = Task::find($task->parent_id);
+        }
+
+        return $task->id;
+    }
+
+    /**
      * Display a listing of the resource.
      */
     public function index()
@@ -58,7 +69,8 @@ class TaskController extends Controller
         $task = Task::create($taskData);
 
         if($task->parent_id){
-            return redirect()->route('tasks.show', $task->parent_id)->with('success', 'Feladat sikeresen hozzáadva');
+            $absoluteParentId = $this->getAbsoluteParentId($task);
+            return redirect()->route('tasks.show', $absoluteParentId)->with('success', 'Feladat sikeresen hozzáadva');
         }
 
         return redirect()->route('tasks.index')->with('success', 'Feladat sikeresen hozzáadva');
@@ -124,7 +136,8 @@ class TaskController extends Controller
         ]);
 
         if($task->parent_id){
-            return redirect()->route('tasks.show', $task->parent_id)->with('success', 'A feladat sikeresen frissítve');
+             $absoluteParentId = $this->getAbsoluteParentId($task);
+            return redirect()->route('tasks.show', $absoluteParentId)->with('success', 'A feladat sikeresen frissítve');
         }
 
         return redirect()->route('tasks.index')->with('success', 'A feladat sikeresen frissítve');
@@ -144,7 +157,8 @@ class TaskController extends Controller
         $task->delete();
 
         if($parent_id){
-            return redirect()->route('tasks.show', $parent_id)->with('success', 'A feladat sikeresen frissítve');
+            $absoluteParentId = $this->getAbsoluteParentId($task);
+            return redirect()->route('tasks.show', $absoluteParentId)->with('success', 'A feladat sikeresen frissítve');
         }
 
         return redirect()->route('tasks.index')->with('sussess', 'A feladat sikeresen törölve');
