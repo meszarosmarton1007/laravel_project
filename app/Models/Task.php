@@ -28,6 +28,32 @@ class Task extends Model
         return $this->belongsTo(User::class);
     }
 
+    //autómatikus státuszfrissítés
+    protected static function booted(){
+        static::saved(function (Task $task){
+            if($task->parent_id){
+                $parent = Task::find($task->parent_id);
+
+                if($parent){
+                    $siblingTasks = Task::where('parent_id', $parent->id)->get();
+
+                    $firstStatus = $siblingTasks->first()->status;
+
+                    $allSame = $siblingTasks->every(function ($sub) use ($firstStatus){
+                        return $sub->status !== null && $sub->status === $firstStatus;
+                    });
+
+                    if($allSame){
+                        $parent->status = $firstStatus;
+
+                        $parent->save();
+                    }
+                }
+            }
+        });
+    }
+
+
     public function subtasks(){
         return $this->hasMany(Task::class, 'parent_id');
     }
