@@ -55,7 +55,11 @@ class TaskController extends Controller
             'due_date' => $fullDate
         ];
 
-        Task::create($taskData);
+        $task = Task::create($taskData);
+
+        if($task->parent_id){
+            return redirect()->route('tasks.show', $task->parent_id)->with('success', 'Feladat sikeresen hozzáadva');
+        }
 
         return redirect()->route('tasks.index')->with('success', 'Feladat sikeresen hozzáadva');
 
@@ -66,7 +70,13 @@ class TaskController extends Controller
      */
     public function show(Task $task)
     {
-       // $task->load('TaskStatus');
+       if($task->user_id !== Auth::id()){
+
+        abort(403, 'Nincs jogosultságod ehhez');
+
+       }
+
+        $task->load('subtasks');
 
         return view('tasks.show', ["task" => $task]);
     }
@@ -109,9 +119,13 @@ class TaskController extends Controller
             'title' => $validated['title'],
             'description' => $validated['description'],
             'status' => $validated['status'] ?? null,
-            'parent_id' => $validated['parent_id'] ?? null,
+           // 'parent_id' => $validated['parent_id'] ?? null,
             'due_date' => $fullDate
         ]);
+
+        if($task->parent_id){
+            return redirect()->route('tasks.show', $task->parent_id)->with('success', 'A feladat sikeresen frissítve');
+        }
 
         return redirect()->route('tasks.index')->with('success', 'A feladat sikeresen frissítve');
     }
@@ -121,7 +135,17 @@ class TaskController extends Controller
      */
     public function destroy(Task $task)
     {
+        if ($task->user_id !== Auth::id()){
+            abort(403, 'Nincs jogosultságod');
+        }
+
+        $parent_id = $task->parent_id;
+
         $task->delete();
+
+        if($parent_id){
+            return redirect()->route('tasks.show', $parent_id)->with('success', 'A feladat sikeresen frissítve');
+        }
 
         return redirect()->route('tasks.index')->with('sussess', 'A feladat sikeresen törölve');
     
