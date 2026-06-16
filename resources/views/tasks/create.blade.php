@@ -7,7 +7,7 @@
         <input type="text" id="title" name="title" value="{{old('title')}}" required>
         <!--A feladat leírása -->
         <label for="description">Leírás: </label>
-        <textarea name="description" id="description" rows="10" value="{{old('description')}}"></textarea>
+        <textarea name="description" id="description" rows="10">{{old('description')}}"</textarea>
          <!--A feladat határideje -->
         <label for="due_date">Határidő: </label>
         <input type="date" name="due_date_day" id="due_date_day" value="{{old('due_date_day')}}" required>
