@@ -5,7 +5,8 @@
         <p><strong>Státusz: </strong> {{$task->status?->label() ?? 'Nincs beállítva'}}</p>
         <strong>Leírás: </strong>
         <p>{{$task->description}}</p>
-        <form action="">
+        <a href="{{route('tasks.edit', $task->id)}}" class="btn">A feladat szerkesztése</a>
+        <form action="{{route('tasks.destroy', $task->id)}}" method="POST">
         @csrf
         @method('DELETE')
         <button type="submit" class="btn my-4">Feladat törlése</button>
