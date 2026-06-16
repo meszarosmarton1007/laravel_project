@@ -50,7 +50,7 @@ class TaskController extends Controller
             'description' => 'required|string|min:10|max:1000',
             'status' => 'nullable|string',
             'parent_id' => 'nullable|exists:tasks,id',
-            'due_date_day' => 'required|date',
+            'due_date_day' => 'required|date|after_or_equal:today',
             'due_date_time' => 'required|date_format:H:i'
         ]);
 
@@ -68,7 +68,7 @@ class TaskController extends Controller
 
         $task = Task::create($taskData);
 
-        if($task->parent_id){
+        if($task->parent_id !== null){
             $absoluteParentId = $this->getAbsoluteParentId($task);
             return redirect()->route('tasks.show', $absoluteParentId)->with('success', 'Feladat sikeresen hozzáadva');
         }
@@ -121,7 +121,7 @@ class TaskController extends Controller
             'description' => 'required|string|min:10|max:1000',
             'status' => 'nullable|string',
             'parent_id' => 'nullable|exists:tasks,id',
-            'due_date_day' => 'required|date',
+            'due_date_day' => 'required|date|after_or_equal:' . $task->created_at->toDateString(),
             'due_date_time' => 'required|date_format:H:i'
         ]);
 
