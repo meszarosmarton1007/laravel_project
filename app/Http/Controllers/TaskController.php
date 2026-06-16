@@ -45,14 +45,33 @@ class TaskController extends Controller
      */
     public function store(Request $request)
     {
-        $validated = $request->validate([
+        //Ha van parent_id, űrlap dátumának összefűzése és ellenőrzés
+        if($request->filled('parent_id') && $request->filled('due_date_day') && $request->filled('due_date_time')){
+            $requestedDueDate = $request->input('due_date_day') . ' ' . $request->input('due_date_time');
+            $request->merge(['full_requested_due_date' => $requestedDueDate]);
+        }
+
+        //Dinamikus szabályok
+        $rules = [
             'title' => 'required|string|max:255',
             'description' => 'required|string|min:10|max:1000',
             'status' => 'nullable|string',
             'parent_id' => 'nullable|exists:tasks,id',
             'due_date_day' => 'required|date|after_or_equal:today',
             'due_date_time' => 'required|date_format:H:i'
-        ]);
+        ];
+
+        //alfeladat esetén további dátum szerinti szűrés
+        $parentTask = null;
+        if ($request->filled('parent_id')){
+            $parentTask = Task::find($request->input('parent_id'));
+            if ($parentTask && $parentTask->due_date){
+                $rules['full_requested_due_date'] = 'required|date|before_or_equal:' . $parentTask->due_date->format('Y-m-d H:i:s');
+            }
+        }
+
+        //validálás
+        $validated = $request->validate($rules, ['full_requested_due_date.before_or_equal' => 'Az alfeladat határideje nem esehet kívül a szülő feladat idejénél']);
 
 
         $fullDate = $validated['due_date_day'] . ' ' . $validated['due_date_time']. ':00';
