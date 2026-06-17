@@ -31,6 +31,21 @@ class Task extends Model
     //autómatikus státuszfrissítés
     protected static function booted(){
         static::saved(function (Task $task){
+            if($task->wasChanged('status')){
+                $newStatus = $task->status;
+
+                $subtasks = Task::where('parent_id', $task->id)->get();
+
+                foreach ($subtasks as $subtask) {
+                    Task::withoutEvents(function () use ($subtask, $newStatus){
+                        $subtask->status = $newStatus;
+                        $subtask->save();
+                    });
+
+                    static::triggerChildrenstatusUpdate($subtask, $newStatus);
+                }
+            }
+
             if($task->parent_id){
                 $parent = Task::find($task->parent_id);
 
@@ -43,7 +58,7 @@ class Task extends Model
                         return $sub->status !== null && $sub->status === $firstStatus;
                     });
 
-                    if($allSame){
+                    if($allSame && $parent->status !== $firstStatus){
                         $parent->status = $firstStatus;
 
                         $parent->save();
@@ -51,6 +66,18 @@ class Task extends Model
                 }
             }
         });
+    }
+
+    protected static function triggerChildrenstatusUpdate(Task $task, $newStatus){
+        $subtasks = Task::where('parent_id', $task->id)->get();
+
+        foreach ($subtasks as $subtask) {
+            Task::withoutEvents(function () use ($subtask, $newStatus){
+                $subtask->status = $newStatus;
+                $subtask->save();
+            });
+            static::triggerChildrenstatusUpdate($subtask, $newStatus);
+        }
     }
 
 
