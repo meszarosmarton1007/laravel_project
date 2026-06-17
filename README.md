@@ -1,4 +1,4 @@
-# Laravel To-Do alkalmazás rekurív alfeladatokkal
+# Laravel To-Do alkalmazás rekurzív alfeladatokkal
 
 ## Beüzemelési segítség lokális futtatáshoz
 
