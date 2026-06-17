@@ -9,7 +9,7 @@
 }
 
 body {
-  @apply bg-green-100 text-gray-700;
+  @apply bg-blue-200 text-gray-700;
   font-family: "Rubik";
 }
 h1 {
@@ -27,16 +27,6 @@ ul {
 p {
   @apply my-2;
 }
-input{
-  @apply bg-white;
-}
-textarea{
-  @apply bg-white;
-}
-select{
-  @apply bg-white;
-}
-
 
 /* header */
 header {
@@ -50,15 +40,16 @@ header {
   }
 }
 
-/* form elements */
+/* form elemek */
 form {
   @apply max-w-screen-sm;
 }
 input, select, textarea {
   @apply block w-full mt-2 mb-4 p-2;
+  @apply bg-white;
 }
 
-/* custom classes */
+/* egyedi osztályok */
 .container {
   @apply max-w-screen-lg mx-auto px-12 py-8;
 }
@@ -69,5 +60,5 @@ input, select, textarea {
   @apply border-l-4 border-l-red-500;
 }
 .btn {
-  @apply rounded px-3 py-2 bg-gray-200 hover:bg-red-500 hover:text-white;
+  @apply rounded px-3 py-2 bg-green-200 hover:bg-red-500 hover:text-white;
 }

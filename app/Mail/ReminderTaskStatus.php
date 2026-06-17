@@ -18,7 +18,7 @@ class ReminderTaskStatus extends Mailable
     public $task;
 
     /**
-     * Create a new message instance.
+     * Új üzenet létrehozása
      */
     public function __construct(Task $task)
     {
@@ -26,7 +26,7 @@ class ReminderTaskStatus extends Mailable
     }
 
     /**
-     * Get the message envelope.
+     * Az email boritékjának összeállítása
      */
     public function envelope(): Envelope
     {
@@ -36,7 +36,7 @@ class ReminderTaskStatus extends Mailable
     }
 
     /**
-     * Get the message content definition.
+     * Az üzenet tartalmának meghatározása
      */
     public function content(): Content
     {
@@ -46,7 +46,7 @@ class ReminderTaskStatus extends Mailable
     }
 
     /**
-     * Get the attachments for the message.
+     * Az üzenet mellékleteinek lekérése
      *
      * @return array<int, Attachment>
      */

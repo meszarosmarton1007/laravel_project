@@ -77,6 +77,7 @@
     @endif
 </div>
 
+<!-- validációs hibák-->
  @if ($errors->any())
       <ul class="px-4 py-2 bg-red-100">
         @foreach ($errors->all() as $error)

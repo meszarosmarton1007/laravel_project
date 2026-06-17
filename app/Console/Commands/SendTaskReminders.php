@@ -15,9 +15,10 @@ use Illuminate\Support\Facades\Mail;
 #[Signature('app:send-task-reminders')]
 #[Description('Emlékeztető e-mail küld azoknak a felhasználóknak, akiknek van közeli lejáratú befejezetlen feladata')]
 class SendTaskReminders extends Command
-{
+{ 
+
     /**
-     * Execute the console command.
+     * Email küldésének feltélének beállítása
      */
     public function handle()
     {

@@ -8,8 +8,10 @@ Route::get('/', function () {
     return view('welcome');
 })->name('welcome');
 
+//kejelentkezés
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
+//csak vendégként elérhető funkciók
 Route::middleware('guest')->controller(AuthController::class)->group(function (){
     Route::get('/register', 'showRegister')->name('show.register');
     Route::post('/register', 'register')->name('register');
@@ -17,6 +19,7 @@ Route::middleware('guest')->controller(AuthController::class)->group(function ()
     Route::post('/login', 'login')->name('login');
 });
 
+//csak bejelentkezett felhasználóknak elérhető funkciók
 Route::middleware('auth')->controller(TaskController::class)->group( function (){
     Route::get('/tasks', 'index')->name('tasks.index');
     Route::get('/tasks/create', 'create')->name('tasks.create');

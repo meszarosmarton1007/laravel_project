@@ -4,7 +4,7 @@
         @foreach ($tasks as $task)
         @if ($task->status != 'completed')
             <li>
-            <x-card href="{{route('tasks.show', $task->id)}}" :highlight="$task['due_date']">
+            <x-card href="{{route('tasks.show', $task->id)}}">
                 <div>
                     <h3>{{$task->title}}</h3>
                     <p>{{$task->description}}</p>

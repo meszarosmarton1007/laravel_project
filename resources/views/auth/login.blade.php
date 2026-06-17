@@ -21,7 +21,7 @@
 
   <button type="submit" class="btn mt-4">Log in</button>
 
-  <!-- validation errors -->
+  <!-- validációs hibák-->
     @if ($errors->any())
       <ul class="px-4 py-2 bg-red-100">
         @foreach ($errors->all() as $error)
