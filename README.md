@@ -4,7 +4,7 @@
 
 1. `git clone https://github.com/meszarosmarton1007/laravel_project.git` master branch-ben van a projekt
 2. `composer install`
-3. `npm install && npm rub build`
+3. `npm install && npm run build` windows esetén `New-Item -ItemType File -Path database/database.sqlite`
 4. `cp .env.example .env`
 5. `php artisan key:generate`
 6. `touch database/database.sqlite`
