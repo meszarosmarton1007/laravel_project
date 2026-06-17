@@ -2,7 +2,7 @@
 
 ## Beüzemelési segítség lokális futtatáshoz
 
-1. `git clone https://github.com/meszarosmarton1007/laravel_project.git` master branch-ben van a projekt--> `git checkout mastert`
+1. `git clone https://github.com/meszarosmarton1007/laravel_project.git` ---> `cd laravel_project` --> master branch-ben van a projekt--> `git checkout mastert` 
 2. `composer install`
 3. `npm install && npm run build` windows esetén `New-Item -ItemType File -Path database/database.sqlite`
 4. `cp .env.example .env`
