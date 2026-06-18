@@ -55,7 +55,7 @@
         <form action="{{route('tasks.destroy', $subtask->id)}}" method="post">
             @csrf
             @method('DELETE')
-            <button type="submit" class="btn">Törlés</button>
+            <button type="submit" class="btn-danger">Törlés</button>
         </form>
     </div>
     <details class="mt-2 text-xs">

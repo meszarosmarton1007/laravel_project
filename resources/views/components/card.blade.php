@@ -5,7 +5,9 @@
     $defaultBg = $hasBgClass ? '' : 'bg-white';
 @endphp
 
-<div {{$attributes->merge(['class' => 'card $defaultBg'])}}>
-    {{$slot}}
-    <a {{$attributes}} class="btn">Részletek és alfeladatok</a>
-</div>
+<a {{$attributes->merge(['class' => 'card $defaultBg'])}}>
+    <div>
+        {{$slot}}
+    </div>
+   <span class="btn mt-2 inline-block">Részletek és alfeladatok</span>
+</a>

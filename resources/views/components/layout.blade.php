@@ -32,7 +32,7 @@
                 <a href="{{route('tasks.create')}}">Új fő feladat létrehozása</a>
                 <form action="{{route('logout')}}" method="POST" class="m-0">
                     @csrf
-                    <button class="btn">
+                    <button class="btn-danger">
                         Kijelentkezés
                     </button>
                 </form>
