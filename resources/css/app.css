@@ -54,7 +54,7 @@ input, select, textarea {
   @apply max-w-screen-lg mx-auto px-12 py-8;
 }
 .card {
-  @apply bg-white rounded border border-gray-200 px-3 py-3 my-2 flex justify-between items-center;
+  @apply rounded border border-gray-200 px-3 py-3 my-2 flex justify-between items-center;
 }
 .highlight {
   @apply border-l-4 border-l-red-500;

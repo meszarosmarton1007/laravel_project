@@ -29,7 +29,7 @@
     <h2>{{$task->title}}</h2>
     <div class="border-1-4 p-4 rounded-lg shadow-sm {{$mainTaskColor}}">
         <p><strong>Határidő: </strong> 
-            <span class="text-xs px-2 py-1 rounded-full {{$mainDueDateBadge}}">
+            <span class="text-medium px-2 py-1 rounded-full {{$mainDueDateBadge}}">
             {{$task->due_date?->format('Y-m-d H:i')}}
             @if ($task->status !== \App\Enums\TaskStatus::Completed && $task->due_date?->isPast())
             (Lejárt)
@@ -39,7 +39,7 @@
         </span>
     </p>
         <p class="mb-2"><strong>Státusz: </strong> 
-           <span class="text-xs px-2 py-0.5 rounded-full border bg-white/50 font-medium text-grey-900"> {{$task->status?->label() ?? 'Nincs beállítva'}}
+           <span class="text-medium px-2 py-1 rounded-full border bg-white/50 font-medium text-grey-900"> {{$task->status?->label() ?? 'Nincs beállítva'}}
            </span>
            </p>
         <strong>Leírás: </strong>
