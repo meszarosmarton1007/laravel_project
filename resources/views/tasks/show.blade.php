@@ -26,6 +26,7 @@
         }
     }
 @endphp
+
     <h2>{{$task->title}}</h2>
     <div class="border-1-4 p-4 rounded-lg shadow-sm {{$mainTaskColor}}">
         <p><strong>Határidő: </strong> 
