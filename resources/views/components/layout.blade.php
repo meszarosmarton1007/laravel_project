@@ -29,7 +29,7 @@
                 <span class="border-r-2 pr-2">
                     Szia {{Auth::user()->name}}
                 </span>
-                <a href="{{route('tasks.create')}}">Új feladat létrehozása</a>
+                <a href="{{route('tasks.create')}}">Új fő feladat létrehozása</a>
                 <form action="{{route('logout')}}" method="POST" class="m-0">
                     @csrf
                     <button class="btn">
